@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Get Bootstrap links and set title --> 
+<head>
+    <title>Photo Garage</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+</head>
+
+<!-- Add home button, set muted title, and retrieve page_num and set it equal to pgNum using Jinja --> 
+<body>
+    {% set pgNum = page_num -%}
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a class="btn btn-lg btn-warning btn-sm" href="/">Home</a></li>
+                </ul>
+                <br/>
+            </nav>
+            <h3 class="text-muted">Photo Garage</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h1>View Photos</h1>
+            <p class="lead"></p>
+            <p>
+                <a class="btn btn-lg btn-success" href="{{ url_for('signup')}}" role="button">Sign up today</a>
+                &nbsp;&nbsp;&nbsp;
+                <a class="btn btn-lg btn-info" href="{{ url_for('upload')}}" role="button">Upload Photo</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-lg btn-danger" href="{{ url_for('viewer', page_num=1)}}" role="button">View Photos</a>
+            </p>
+        </div>
+
+        <html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+  </head>
+
+  <body>
+      <!-- For loop that loops through every photo in the database and displays the correct 10 depening on pgNum -->
+      <!-- The photo caption is fetched using the loop index -->
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+            {% for image_name in image_names %}
+            {% if ((loop.index <= pgNum*10) and (loop.index > (pgNum-1)*10))%}
+            <div class="col-md-4">
+              <div class="card mb-6 box-shadow">
+                <img class="card-img-top" src=" {{url_for('send_image', filename=image_name)}}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">{{image_captions[loop.index - 1]}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <script src="../../../../assets/js/vendor/holder.min.js"></script>
+    <!-- Sets the value of the previous and next pages using the page number -->
+    <!-- If user is on the first page, sets the previous page to the first page to prevent negative page indices -->
+    {% set pgPrev = page_num - 1 %}
+    {% set pgNext = page_num + 1 %}
+    {% if (pgPrev == 0) %}
+      {% set pgPrev = 1 %}
+    {% endif %}
+    <a class="btn btn-lg btn-warning btn-sm" id = "prev" href="{{ url_for('viewer', page_num= pgPrev)}}" align="left" href="#">< Previous</a>
+    <a class="btn btn-lg btn-warning btn-sm" id = "next" href="{{ url_for('viewer', page_num= pgNext)}}" style="float: right;" href="#">Next ></a>
+  </body>
+  <br/>
+  <br/>
+        <!-- Display footer -->
+        <footer class="footer">
+            <p>&copy; Jay Villari 2018</p>
+        </footer>
+</body>
+ 
+</html>

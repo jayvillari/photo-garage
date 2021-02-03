@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Get Bootstrap links and set title -->
+    <title>Photo Garage</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/signup.css" rel="stylesheet">
+    <script src="../static/js/jquery-3.3.1.js"></script>
+    <!-- Handles new user sign up button click -->
+    <script>
+      $(function() {
+    $('#btnSignUp').click(function() {
+ 
+        $.ajax({
+            url: '/newUser',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+
+    
+  </head>
+ 
+  <body>
+    
+    <!-- Add home button and set muted title -->
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a class="btn btn-lg btn-warning btn-sm" href="/">Home</a></li>
+                </ul>
+        </nav>
+        <br/>
+        <h3 class="text-muted">Photo Garage</h3>
+      </div>
+      
+      <!-- Set sign up title and add navigation links -->
+      <div class="jumbotron">
+        <h1 align="center">Sign Up</h1>
+        <form class="form-signin">
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+         
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
+      </form>
+      </div>
+ 
+       
+      <!-- Display footer -->
+      <footer class="footer">
+        <p>&copy; Jay Villari 2018</p>
+      </footer>
+ 
+    </div>
+  </body>
+</html>
